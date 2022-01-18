@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-var testdata = filepath.Join("..", "testdata")
+var testdata = filepath.Join("testdata")
 
 type testCase struct {
 	Input  string
@@ -31,7 +31,7 @@ func readDataFile(path string) ([]byte, error) {
 func TestTitle(t *testing.T) {
 	tests := make([]testCase, 0)
 
-	cases, err := readDataFile(filepath.Join(testdata, "title.json"))
+	cases, err := readDataFile(filepath.Join(testdata, "AP.json"))
 	if err != nil {
 		t.Error(err)
 	}
@@ -45,7 +45,7 @@ func TestTitle(t *testing.T) {
 	for _, test := range tests {
 		title := tc.Title(test.Input)
 		if test.Expect != title {
-			t.Fatalf("Got '%s'; expected '%s'", test.Expect, title)
+			t.Fatalf("Got '%s'; expected '%s'", title, test.Expect)
 		}
 	}
 }
