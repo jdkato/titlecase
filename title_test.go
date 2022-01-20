@@ -28,7 +28,7 @@ func readDataFile(path string) ([]byte, error) {
 	return data, nil
 }
 
-func TestTitle(t *testing.T) {
+func TestAP(t *testing.T) {
 	tests := make([]testCase, 0)
 
 	cases, err := readDataFile(filepath.Join(testdata, "AP.json"))
@@ -42,6 +42,28 @@ func TestTitle(t *testing.T) {
 	}
 
 	tc := NewTitleConverter(APStyle)
+	for _, test := range tests {
+		title := tc.Title(test.Input)
+		if test.Expect != title {
+			t.Fatalf("Got '%s'; expected '%s'", title, test.Expect)
+		}
+	}
+}
+
+func TestChicago(t *testing.T) {
+	tests := make([]testCase, 0)
+
+	cases, err := readDataFile(filepath.Join(testdata, "Chicago.json"))
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = json.Unmarshal(cases, &tests)
+	if err != nil {
+		t.Error(err)
+	}
+
+	tc := NewTitleConverter(ChicagoStyle)
 	for _, test := range tests {
 		title := tc.Title(test.Input)
 		if test.Expect != title {
